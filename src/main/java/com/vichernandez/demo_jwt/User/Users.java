@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -26,26 +27,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user", uniqueConstraints= {@UniqueConstraint(columnNames={"username"})})
-public class User implements UserDetails{ //agrego la implementacion de userdetails para trabajar con la autenticacion, gracias a los metodos que brinda
+@Table(name = "users", uniqueConstraints= {@UniqueConstraint(columnNames={"username"})})
+public class Users implements UserDetails{ //agrego la implementacion de userdetails para trabajar con la autenticacion, gracias a los metodos que brinda
 
     @Id
-    @GeneratedValue
-    Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
-    String username;
+    private String username;
 
-    String lastname;
+    private String lastname;
 
-    String firstname;
+    private String firstname;
 
-    String country;
+    private String country;
 
-    String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    Rol role;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,5 +56,34 @@ public class User implements UserDetails{ //agrego la implementacion de userdeta
     // Existen otros metodos de la interface UserDetails, pero no se usaran ya que se estara trabajando con un token
     // y este token contendra la informacion necesaria, por tanto estas funciones no seran necesarias
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

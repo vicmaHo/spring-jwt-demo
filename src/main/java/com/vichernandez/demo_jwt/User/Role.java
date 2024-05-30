@@ -1,6 +1,6 @@
 package com.vichernandez.demo_jwt.User;
 
-public enum Rol {
+public enum Role {
     ADMIN, 
     USER
 }
