@@ -1,16 +1,18 @@
 package com.vichernandez.demo_jwt.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class TestController {
 
-    @GetMapping
+    @GetMapping(value = "/test")
     public String method() {
-        return "test";
+        
+        System.out.println("Accedo");
+        return "Welcome from protected endpoint";
     }
 }
